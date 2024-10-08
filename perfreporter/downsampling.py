@@ -209,7 +209,10 @@ class Downsampler(object):
             users_data = list(local_client.query(SELECT_USERS_DATA.format(users_last_read_time)).get_points())
             if requests_data:
                 requests_last_read_time = requests_data[-1]['time']
-                users_last_read_time = users_data[-1]['time']
+                try:
+                    users_last_read_time = users_data[-1]['time']
+                except:
+                    ...
                 ok_requests, ko_requests = self.aggregate_results(requests_data)
                 self.append_to_batch(ok_requests_5min_batch, ok_requests)
                 self.append_to_batch(ko_requests_5min_batch, ko_requests)
